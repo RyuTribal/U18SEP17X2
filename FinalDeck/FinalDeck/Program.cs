@@ -11,7 +11,6 @@ namespace FinalDeck
         static void Main(string[] args)
         {
             Random rSuit = new Random();
-            int rSuitCount = rSuit.Next(0, 3);
             List<int> deck = new List<int>();
             Random shuffle = new Random();
 
@@ -39,9 +38,22 @@ namespace FinalDeck
             string answer = "";
             string suitName = "";
             string valueName = "";
+            int lineChange = 0;
+            int rSuitCount = rSuit.Next(0, 3);
             do
             {
-                Console.WriteLine("Would you like to pull a card? (yes or no)");
+
+                if(lineChange == 1)
+                {
+                    Console.WriteLine("Draw another one? (yes or no)");
+                    lineChange = 1;
+                }
+                else
+                {
+                    Console.WriteLine("Let's play blackjack! Get 21 points in\ntotal and you win but get over that and lose. " +
+                    "Would you like to pull a card? (yes or no)");
+                }
+                lineChange = 1;
                 answer = Console.ReadLine().ToLower();
                 switch (answer)
                 {
@@ -53,70 +65,90 @@ namespace FinalDeck
                         switch (rSuitCount)
                         {
                             case 0:
-                                suitName = "Hjärter";
+                                suitName = "Hearts";
+                                rSuitCount = rSuit.Next(0, 3);
                                 break;
                             case 1:
-                                suitName = "Ruter";
+                                suitName = "Diamonds";
+                                rSuitCount = rSuit.Next(0, 3);
                                 break;
                             case 2:
-                                suitName = "Spader";
+                                suitName = "Spades";
+                                rSuitCount = rSuit.Next(0, 3);
                                 break;
                             case 3:
-                                suitName = "Klöver";
+                                suitName = "Clubs";
+                                rSuitCount = rSuit.Next(0, 3);
                                 break;
 
                         }
                         switch (value)
                         {
                             case 1:
-                                valueName = "Ess";
+                                valueName = "Ace";
                                 break;
                             case 2:
-                                valueName = "Två";
+                                valueName = "Two";
                                 break;
                             case 3:
-                                valueName = "Tre";
+                                valueName = "Three";
                                 break;
                             case 4:
-                                valueName = "Fyra";
+                                valueName = "Four";
                                 break;
                             case 5:
-                                valueName = "Fem";
+                                valueName = "Five";
                                 break;
                             case 6:
-                                valueName = "Sex";
+                                valueName = "Six";
                                 break;
                             case 7:
-                                valueName = "Sju";
+                                valueName = "Seven";
                                 break;
                             case 8:
-                                valueName = "Åtta";
+                                valueName = "Eight";
                                 break;
                             case 9:
-                                valueName = "Nio";
+                                valueName = "Nine";
                                 break;
                             case 10:
-                                valueName = "Tio";
+                                valueName = "Ten";
                                 break;
                             case 11:
-                                valueName = "Knäckt";
+                                valueName = "Jack";
                                 break;
                             case 12:
-                                valueName = "Dam";
+                                valueName = "Queen";
                                 break;
                             case 13:
-                                valueName = "Kung";
+                                valueName = "King";
                                 break;
                         }
-                        Console.WriteLine("Du drog " + suitName + " " + valueName + " och din summa är " + sum);
+                        Console.WriteLine("You pulled " + valueName + " of " + suitName + " and your sum is " + sum);
                         switching = 1;
                         break;
                     case "no":
-                        Console.WriteLine("Din totala summa är " + sum);
+                        Console.WriteLine("Your total sum is " + sum);
+                        if (sum == 21)
+                        {
+                            Console.WriteLine("Good job you won CJ");
+                            switching = 0;
+                        }
+                        else if(sum < 21)
+                        {
+                            Console.WriteLine("All you had to do was draw more cards CJ!");
+                            switching = 1;
+                        }
+                        else
+                        {
+                            Console.WriteLine("You lost CJ");
+                            switching = 0;
+                        }
+
                         switching = 0;
                         break;
                     default:
-                        Console.WriteLine("All you had to do was choose yes or no CJ");
+                        Console.WriteLine("All you had to do was choose yes or no CJ!");
                         switching = 1;
                         break;
                 }
